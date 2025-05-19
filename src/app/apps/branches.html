@@ -1,0 +1,113 @@
+<div>
+    <div class="flex flex-wrap items-center justify-between gap-4">
+        <h2 class="text-xl">Provinsi Control</h2>
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-3 w-full sm:w-auto">
+            <div class="flex gap-3">
+                <button type="button" class="btn btn-primary" (click)="editProvince()">
+                    <icon-plus class="ltr:mr-2 rtl:ml-2" /> Add Provinsi
+                </button>
+                <button type="button" class="btn btn-primary" (click)="addBranch()">
+                    <icon-plus class="ltr:mr-2 rtl:ml-2" /> Add Branch
+                </button>
+            </div>
+            <div class="relative">
+                <input
+                    type="text"
+                    placeholder="Search Provinsi"
+                    class="peer form-input py-2 ltr:pr-11 rtl:pl-11"
+                    [(ngModel)]="searchProvince"
+                    (ngModelChange)="searchProvinces()"
+                />
+                <div class="absolute top-1/2 -translate-y-1/2 ltr:right-[11px] rtl:left-[11px]">
+                    <icon-search class="mx-auto" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel mt-5 overflow-hidden border-0 p-0">
+        <div class="table-responsive">
+            <table class="table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Provinsi Name</th>
+                        <th>Branch</th>
+                        <th class="!text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let province of filteredProvinceList">
+                        <td>{{ province.name }}</td>
+                        <td>{{ province.branch }}</td>
+                        <td>
+                            <div class="flex justify-center gap-2">
+                                <button class="btn btn-sm btn-outline-primary" (click)="editProvince(province)">Edit</button>
+                                <button class="btn btn-sm btn-outline-danger" (click)="deleteProvince(province)">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <ngx-custom-modal #addProvinceModal class="no-footer">
+        <ng-template #modalHeader>
+            <div class="!font-medium">{{ params.controls['id'].value ? 'Edit Provinsi' : 'Add Provinsi' }}</div>
+        </ng-template>
+        <ng-template #modalBody>
+            <form [formGroup]="params" class="text-sm" (ngSubmit)="saveProvince()" ngNativeValidate>
+                <div class="mb-5">
+                    <label for="provinceName">Provinsi Name</label>
+                    <input id="provinceName" type="text" placeholder="Enter Provinsi Name" class="form-input" formControlName="name" />
+                </div>
+                <div class="mb-5">
+                    <label for="branchSelect">Branch</label>
+                    <select id="branchSelect" class="form-select mt-2" formControlName="branch">
+                        <option value="" disabled selected>Select Branch</option>
+                        <option *ngFor="let branch of branchList" [value]="branch">{{ branch }}</option>
+                    </select>
+                </div>
+                <div class="mt-8 flex items-center justify-end">
+                    <button type="button" class="btn btn-outline-danger" (click)="addProvinceModal.close()">Cancel</button>
+                    <button type="submit" class="btn btn-primary ltr:ml-4 rtl:mr-4">
+                        {{ params.controls['id'].value ? 'Update' : 'Add' }}
+                    </button>
+                </div>
+            </form>
+        </ng-template>
+    </ngx-custom-modal>
+
+    <ngx-custom-modal #addBranchModal class="no-footer">
+        <ng-template #modalHeader>
+            <div class="!font-medium">Manage Branches</div>
+        </ng-template>
+        <ng-template #modalBody>
+            <form [formGroup]="paramsBranch" class="text-sm" (ngSubmit)="saveBranch()" ngNativeValidate>
+                <div class="mb-5">
+                    <label for="branchName">Branch Name</label>
+                    <input id="branchName" type="text" placeholder="Enter Branch Name" class="form-input" formControlName="branchName" />
+                </div>
+                <div class="flex justify-end mb-5">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+    
+            <hr class="my-4" />
+    
+            <h3 class="text-base font-semibold mb-2">Branches List</h3>
+            <div class="max-h-[200px] overflow-y-auto">
+                <ul class="divide-y">
+                    <li *ngFor="let branch of branchList" class="flex items-center justify-between py-2">
+                        <span>{{ branch }}</span>
+                        <button class="btn btn-sm btn-outline-danger" (click)="deleteBranch(branch)">Delete</button>
+                    </li>
+                </ul>
+            </div>
+    
+            <div class="mt-6 flex items-center justify-end">
+                <button type="button" class="btn btn-outline-danger" (click)="addBranchModal.close()">Close</button>
+            </div>
+        </ng-template>
+    </ngx-custom-modal>
+</div>

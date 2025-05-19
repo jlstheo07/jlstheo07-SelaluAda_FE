@@ -1,0 +1,121 @@
+<div>
+    <div class="flex flex-wrap items-center justify-between gap-4">
+        <h2 class="text-xl">Role Control</h2>
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-3 w-full sm:w-auto">
+            <div class="flex gap-3">
+                <button type="button" class="btn btn-primary" (click)="editRole()">
+                    <icon-plus class="ltr:mr-2 rtl:ml-2" /> Add Role
+                </button>
+                <button type="button" class="btn btn-primary" (click)="addFeature()">
+                    <icon-plus class="ltr:mr-2 rtl:ml-2" /> Add Feature
+                </button>
+            </div>
+            <div class="relative">
+                <input
+                    type="text"
+                    placeholder="Search Role"
+                    class="peer form-input py-2 ltr:pr-11 rtl:pl-11"
+                    [(ngModel)]="searchRole"
+                    (ngModelChange)="searchRoles()"
+                />
+                <div class="absolute top-1/2 -translate-y-1/2 ltr:right-[11px] rtl:left-[11px]">
+                    <icon-search class="mx-auto" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel mt-5 overflow-hidden border-0 p-0">
+        <div class="table-responsive">
+            <table class="table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Role Name</th>
+                        <th>Features</th>
+                        <th class="!text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let role of filteredRoleList">
+                        <td>{{ role.name }}</td>
+                        <td>{{ role.features.join(', ') }}</td>
+                        <td>
+                            <div class="flex justify-center gap-2">
+                                <button class="btn btn-sm btn-outline-primary" (click)="editRole(role)">Edit</button>
+                                <button class="btn btn-sm btn-outline-danger" (click)="deleteRole(role)">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <ngx-custom-modal #addRoleModal class="no-footer">
+        <ng-template #modalHeader>
+            <div class="!font-medium">{{ params.controls['id'].value ? 'Edit Role' : 'Add Role' }}</div>
+        </ng-template>
+        <ng-template #modalBody>
+            <form [formGroup]="params" class="text-sm" (ngSubmit)="saveRole()" ngNativeValidate>
+                <div class="mb-5">
+                    <label for="roleName">Role Name</label>
+                    <input id="roleName" type="text" placeholder="Enter Role Name" class="form-input" formControlName="name" />
+                </div>
+                <div class="mb-5">
+                    <label>Features</label>
+                    <div class="grid grid-cols-2 gap-2 mt-2">
+                        <label *ngFor="let feature of featureList" class="flex items-center gap-2">
+                            <input
+                                type="checkbox"
+                                [checked]="isFeatureSelected(feature)"
+                                (change)="toggleFeatureSelection(feature)"
+                            />
+                            {{ feature }}
+                        </label>
+                    </div>
+                </div>
+                <div class="mt-8 flex items-center justify-end">
+                    <button type="button" class="btn btn-outline-danger" (click)="addRoleModal.close()">Cancel</button>
+                    <button type="submit" class="btn btn-primary ltr:ml-4 rtl:mr-4">
+                        {{ params.controls['id'].value ? 'Update' : 'Add' }}
+                    </button>
+                </div>
+            </form>
+        </ng-template>
+    </ngx-custom-modal>
+
+    <ngx-custom-modal #addFeatureModal class="no-footer">
+        <ng-template #modalHeader>
+            <div class="!font-medium">Manage Features</div>
+        </ng-template>
+        <ng-template #modalBody>
+            <form [formGroup]="paramsFeature" class="text-sm" (ngSubmit)="saveFeature()" ngNativeValidate>
+                <div class="mb-5">
+                    <label for="featureName">Feature Name</label>
+                    <input id="featureName" type="text" placeholder="Enter Feature Name" class="form-input" formControlName="featureName" />
+                </div>
+                <div class="flex justify-end mb-5">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+    
+            <hr class="my-4" />
+    
+            <h3 class="text-base font-semibold mb-2">Features List</h3>
+            <div class="max-h-[200px] overflow-y-auto">
+                <ul class="divide-y">
+                    <li *ngFor="let feature of featureList" class="flex items-center justify-between py-2">
+                        <span>{{ feature }}</span>
+                        <button class="btn btn-sm btn-outline-danger" (click)="deleteFeature(feature)">Delete</button>
+                    </li>
+                </ul>
+            </div>
+    
+            <div class="mt-6 flex items-center justify-end">
+                <button type="button" class="btn btn-outline-danger" (click)="addFeatureModal.close()">Close</button>
+            </div>
+        </ng-template>
+    </ngx-custom-modal>
+    
+    
+</div>

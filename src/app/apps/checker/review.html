@@ -1,0 +1,382 @@
+<div>
+
+    <div class="panel mb-6 flex items-center overflow-x-auto whitespace-nowrap p-3 text-primary">
+        <div class="rounded-full bg-primary p-1.5 text-white ring-2 ring-primary/30 ltr:mr-3 rtl:ml-3">
+            <icon-pencil />
+        </div>
+        <span class="ltr:mr-3 rtl:ml-3 text-xl font-bold">LOAN REVIEW</span>
+    </div>
+    <div class="flex flex-col gap-2.5 xl:flex-row">
+        <div class="panel flex-1 px-0 py-6 ltr:xl:mr-6 rtl:xl:ml-6">
+            <div class="flex flex-wrap justify-between px-4">
+                <div class="mb-6 w-full lg:w-1/2">
+                    <div class="flex shrink-0 items-center text-black dark:text-white">
+                        <img src="/assets/images/logo.svg" alt="" class="w-14" />
+                    </div>
+                    <div class="mt-6 space-y-1 text-gray-500 dark:text-gray-400">
+                        <div>Jalan doang jadian kagak, Wakanda</div>
+                        <div>{{"customer.service@selaluada.com"}}</div>
+                        <div>+62 (024) 123-4567</div>
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/2 lg:max-w-fit">
+                    <div class="flex items-center">
+                        <label for="number" class="mb-0 flex-1 ltr:mr-2 rtl:ml-2">Nomor Kontrak</label>
+                        <input
+                            id="number"
+                            type="text"
+                            name="inv-num"
+                            class="form-input w-2/3 lg:w-[250px]"
+                            placeholder="#8801"
+                            [(ngModel)]="params.invoiceNo"
+                            name="invoiceNo"
+                        />
+                    </div>
+                    <div class="mt-4 flex items-center">
+                        <label for="invoiceLabel" class="mb-0 flex-1 ltr:mr-2 rtl:ml-2">Penjualan</label>
+                        <input
+                            id="invoiceLabel"
+                            type="text"
+                            name="inv-label"
+                            class="form-input w-2/3 lg:w-[250px]"
+                            placeholder="Enter Invoice Label"
+                            [(ngModel)]="params.title"
+                            name="title"
+                        />
+                    </div>
+                    <div class="mt-4 flex items-center">
+                        <label for="startDate" class="mb-0 flex-1 ltr:mr-2 rtl:ml-2">Tanggal Pengajuan</label>
+                        <input
+                            id="startDate"
+                            type="date"
+                            name="inv-date"
+                            class="form-input w-2/3 lg:w-[250px]"
+                            [(ngModel)]="params.invoiceDate"
+                            name="invoiceDate"
+                        />
+                    </div>
+                    
+                </div>
+            </div>
+            <hr class="my-6 border-[#e0e6ed] dark:border-[#1b2e4b]" />
+            <div class="mt-8 px-4">
+                <div class="flex justify-center mb-6">
+                    <img
+                      src="assets/images/ktp.png"
+                      alt="Foto Konsumen"
+                      class="w-128 h-auto rounded shadow-lg"
+                    />
+                </div>
+                
+                <div class="flex flex-col justify-between lg:flex-row">
+                    <div class="mb-6 w-full lg:w-1/2 ltr:lg:mr-6 rtl:lg:ml-6">
+                        <div class="text-lg font-semibold">Data Konsumen</div>
+                        <div class="mt-4 flex items-center">
+                            <label for="reciever-name" class="mb-0 w-1/3 ltr:mr-2 rtl:ml-2">Nama Lengkap</label>
+                            <input
+                                id="reciever-name"
+                                type="text"
+                                name="reciever-name"
+                                class="form-input flex-1"
+                                [(ngModel)]="params.to.name"
+                                name="name"
+                                placeholder="Enter Name"
+                            />
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <label for="reciever-email" class="mb-0 w-1/3 ltr:mr-2 rtl:ml-2">Email</label>
+                            <input
+                                id="reciever-email"
+                                type="email"
+                                name="reciever-email"
+                                class="form-input flex-1"
+                                [(ngModel)]="params.to.email"
+                                name="email"
+                                placeholder="Enter Email"
+                            />
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <label for="gender" class="mb-0 w-1/3 ltr:mr-2 rtl:ml-2">Gender</label>
+                            <select
+                                id="gender"
+                                name="gender"
+                                class="form-select flex-1"
+                                [(ngModel)]="params.to.gender"
+                            >
+                                <option value="pria">Pria</option>
+                                <option value="wanita">Wanita</option>
+                                
+                            </select>
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <label for="reciever-address" class="mb-0 w-1/3 ltr:mr-2 rtl:ml-2">Alamat</label>
+                            <input
+                                id="reciever-address"
+                                type="text"
+                                name="reciever-address"
+                                class="form-input flex-1"
+                                [(ngModel)]="params.to.address"
+                                name="address"
+                                placeholder="Enter Address"
+                            />
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <label for="reciever-city" class="mb-0 w-1/3 ltr:mr-2 rtl:ml-2">Kabupaten/ Kota</label>
+                            <input
+                                id="reciever-city"
+                                type="text"
+                                name="reciever-city"
+                                class="form-input flex-1"
+                                [(ngModel)]="params.to.city"
+                                name="city"
+                                placeholder="Enter City"
+                            />
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <label for="reciever-province" class="mb-0 w-1/3 ltr:mr-2 rtl:ml-2">Provinsi</label>
+                            <input
+                                id="reciever-province"
+                                type="text"
+                                name="reciever-province"
+                                class="form-input flex-1"
+                                [(ngModel)]="params.to.province"
+                                name="province"
+                                placeholder="Enter Province"
+                            />
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <label for="reciever-number" class="mb-0 w-1/3 ltr:mr-2 rtl:ml-2">Nomor Telepon</label>
+                            <input
+                                id="reciever-number"
+                                type="text"
+                                name="reciever-number"
+                                class="form-input flex-1"
+                                [(ngModel)]="params.to.phone"
+                                name="phone"
+                                placeholder="Enter Phone Number"
+                            />
+                        </div>
+                        
+                    </div>
+                    <div class="w-full lg:w-1/2">
+                        <div class="text-lg font-semibold">Capital</div>
+                        <div class="mt-4 flex items-center">
+                            <label for="reciever-job" class="mb-0 w-1/3 ltr:mr-2 rtl:ml-2">Pekerjaan</label>
+                            <input
+                                id="reciever-job"
+                                type="text"
+                                name="reciever-job"
+                                class="form-input flex-1"
+                                [(ngModel)]="params.to.job"
+                                name="job"
+                                placeholder="Enter Job"
+                            />
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <label for="acno" class="mb-0 w-1/3 ltr:mr-2 rtl:ml-2">Nomor Rekening</label>
+                            <input
+                                id="acno"
+                                type="text"
+                                name="acno"
+                                class="form-input flex-1"
+                                [(ngModel)]="params.bankInfo.no"
+                                name="no"
+                                placeholder="Enter Account Number"
+                            />
+                        </div>
+                        <div class="mt-4 flex items-center">
+                            <label for="bank-name" class="mb-0 w-1/3 ltr:mr-2 rtl:ml-2">Bank</label>
+                            <input
+                                id="bank-name"
+                                type="text"
+                                name="bank-name"
+                                class="form-input flex-1"
+                                [(ngModel)]="params.bankInfo.name"
+                                name="name"
+                                placeholder="Enter Bank Name"
+                            />
+                        </div>
+                        
+                        <div class="mt-4 flex items-center">
+                            <label for="payment-method" class="mb-0 w-1/3 ltr:mr-2 rtl:ml-2">Metode Pembayaran</label>
+                            <select
+                                id="payment-method"
+                                name="paymentMethod"
+                                class="form-select flex-1"
+                                [(ngModel)]="paymentMethod"
+                            >
+                                <option value="bank">Transfer Bank</option>
+                                <option value="qris">QRIS</option>
+                                <option value="autodebet">Autodebet</option>
+                            </select>
+                        </div>
+
+                        <div class="mt-4 flex items-center">
+                            <!-- History (Abu-abu) -->
+                            <a routerLink="/apps/invoice/preview" class="btn btn-warning w-full gap-2">
+                                <icon-info-circle class="shrink-0 ltr:mr-2 rtl:ml-2" />
+                                History Pinjaman Sebelumnya
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Level Plafond</th>
+                                <th class="w-1">Pengajuan</th>
+                                <th class="w-1">Bunga</th>
+                                <th class="w-1">Total</th>
+                                <th class="w-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="items.length <= 0">
+                                <tr>
+                                    <td colspan="5" class="!text-center font-semibold">No Item Available</td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngFor="let item of items; index as i">
+                                <tr class="align-top">
+                                    <td>
+                                        <input
+                                            type="text"
+                                            class="form-input min-w-[200px]"
+                                            placeholder="Enter Item Name"
+                                            [(ngModel)]="item.title"
+                                            name="title"
+                                        />
+                                        <textarea
+                                            class="form-textarea mt-4"
+                                            placeholder="Enter Description"
+                                            [(ngModel)]="item.description"
+                                            name="description"
+                                        ></textarea>
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="number"
+                                            class="form-input w-32"
+                                            placeholder="Quantity"
+                                            [(ngModel)]="item.quantity"
+                                            name="quantity"
+                                            min="0"
+                                        />
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-input w-32" placeholder="Price" [(ngModel)]="item.amount" name="amount" min="0" />
+                                    </td>
+                                    <td>Rp{{ (item.amount * (item.quantity / 100)) | number:'1.0' }}</td>
+                                    
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-6 flex flex-col justify-between px-4 sm:flex-row">
+                    <div class="mb-6 sm:mb-0">
+                        
+                    </div>
+                    <div class="sm:w-2/5">
+                        <div class="flex items-center justify-between">
+                            <div>Subtotal (Rp)</div>
+                            <div>2.000.000</div>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                            <div>Bunga (%)</div>
+                            <div>2</div>
+                        </div>
+                        <div class="mt-4 flex items-center justify-between">
+                            <div>Biaya Admin (Rp)</div>
+                            <div>100.000</div>
+                        </div>
+                       
+                        <div class="mt-4 flex items-center justify-between font-semibold">
+                            <div>Total (Rp)</div>
+                            <div>2.140.000</div>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="mt-6 w-full xl:mt-0 xl:w-96">
+            <div class="panel mb-5">
+
+
+                <div class="mt-4">
+                    <label for="currency">Level Plafond</label>
+                    <select id="currency" name="currency" class="form-select" [(ngModel)]="paymentMethod">
+                        <option value="Black">Black</option>
+                        <option value="Platinum">Platinum</option>
+                        <option value="Gold">Gold</option>
+                        <option value="Silver">Silver</option>
+                        <option value="Bronze">Bronze</option>
+                    </select>
+                </div>
+                <div class="mt-4">
+                    <label for="country" class="mb-0 w-1/3 ltr:mr-2 rtl:ml-2">Cabang</label>
+                    <select id="country" name="country" class="form-select flex-1" [(ngModel)]="params.bankInfo.country" name="country">
+                        <option value="Sumatra">Sumatra</option>
+                        <option value="Jawa">Jawa</option>
+                        <option value="Kalimantan dan Nusa Tenggara">Kalimantan dan Nusa Tenggara</option>
+                        <option value="Sulawesi dan Papua">Sulawesi dan Papua</option>
+                    </select>
+                </div>
+                <div class="mt-4">
+                    <label for="currency">Branch Manager</label>
+                    <select id="currency" name="currency" class="form-select" [(ngModel)]="paymentMethod">
+                        <option value="Immanuel">Immanuel</option>
+                        <option value="Natanael">Natanael</option>
+
+                    </select>
+                </div>
+                <div class="mt-4">
+                    <label for="currency">Marketing</label>
+                    <select id="currency" name="currency" class="form-select" [(ngModel)]="paymentMethod">
+                        <option value="Julius">Julius</option>
+                        <option value="Krisna">Krisna</option>
+
+                    </select>
+                </div>
+                <div class="mt-4">
+                    <div>
+                        <label for="notes">Catatan Review</label>
+                        <textarea
+                            id="notes"
+                            name="notes"
+                            class="form-textarea min-h-[130px]"
+                            placeholder="Notes...."
+                            [(ngModel)]="params.notes"
+                            name="notes"
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="mt-4 ">
+                    <label for="dueDate" class="mb-0 flex-1 ltr:mr-2 rtl:ml-2">Tanggal Review</label>
+                    <input id="dueDate" type="date" name="due-date" class="form-input " [(ngModel)]="params.dueDate" name="dueDate" />
+                </div>
+            </div>
+            <div class="panel">
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-1">
+                    <!-- Reject (Merah) -->
+                    <button type="button" class="btn btn-danger w-full gap-2">
+                        <icon-minus-circle class="shrink-0 ltr:mr-2 rtl:ml-2" />
+                        Reject
+                    </button>
+
+                    <!-- Reviewed (Hijau) -->
+                    <button type="button" class="btn btn-success w-full gap-2">
+                        <icon-circle-check class="shrink-0 ltr:mr-2 rtl:ml-2" />
+                        Reviewed
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

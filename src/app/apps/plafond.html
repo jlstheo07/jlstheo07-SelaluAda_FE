@@ -1,0 +1,98 @@
+<div>
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <h2 class="text-xl">Plafond Control</h2>
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-3 w-full sm:w-auto">
+      <div class="flex gap-3">
+        <button type="button" class="btn btn-primary" (click)="editPlafond()">
+          <icon-plus class="ltr:mr-2 rtl:ml-2"></icon-plus> Add Plafond
+        </button>
+      </div>
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="Search Level"
+          class="peer form-input py-2 ltr:pr-11 rtl:pl-11"
+          [(ngModel)]="searchPlafond"
+          (ngModelChange)="searchPlafonds()"
+        />
+        <div class="absolute top-1/2 -translate-y-1/2 ltr:right-[11px] rtl:left-[11px]">
+          <icon-search class="mx-auto"></icon-search>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel mt-5 overflow-hidden border-0 p-0">
+    <div class="table-responsive">
+      <table class="table-striped table-hover w-full">
+        <thead>
+          <tr>
+            <th>Level</th>
+            <th>Maksimal Pinjaman</th>
+            <th>Maksimal Tenor</th>
+            <th>Maksimal Bunga</th>
+            <th class="!text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let plafond of filteredPlafondList">
+            <td>{{ plafond.level }}</td>
+            <td>{{ plafond.maxLoan | number }}</td>
+            <td>{{ plafond.maxTenor }}</td>
+            <td>{{ plafond.maxInterest }}%</td>
+            <td>
+              <div class="flex justify-center gap-2">
+                <button class="btn btn-sm btn-outline-primary" (click)="editPlafond(plafond)">Edit</button>
+                <button class="btn btn-sm btn-outline-danger" (click)="deletePlafond(plafond)">Delete</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <ngx-custom-modal #addPlafondModal class="no-footer">
+    <ng-template #modalHeader>
+      <div class="!font-medium">{{ plafondParams.controls['id'].value ? 'Edit Plafond' : 'Add Plafond' }}</div>
+    </ng-template>
+    <ng-template #modalBody>
+      <form [formGroup]="plafondParams" class="text-sm" (ngSubmit)="savePlafond()" ngNativeValidate>
+        <div class="mb-5">
+          <label for="level">Level Plafond</label>
+          <input id="level" type="text" placeholder="Enter Level" class="form-input" formControlName="level" />
+        </div>
+        <div class="mb-5">
+          <label for="maxLoan">Maksimal Pinjaman</label>
+          <input
+            id="maxLoan"
+            type="number"
+            placeholder="Enter Maksimal Pinjaman"
+            class="form-input"
+            formControlName="maxLoan"
+          />
+        </div>
+        <div class="mb-5">
+          <label for="maxTenor">Maksimal Tenor (bulan)</label>
+          <input id="maxTenor" type="number" placeholder="Enter Maksimal Tenor" class="form-input" formControlName="maxTenor" />
+        </div>
+        <div class="mb-5">
+          <label for="maxInterest">Maksimal Bunga (%)</label>
+          <input
+            id="maxInterest"
+            type="number"
+            placeholder="Enter Maksimal Bunga"
+            class="form-input"
+            formControlName="maxInterest"
+          />
+        </div>
+        <div class="mt-8 flex items-center justify-end">
+          <button type="button" class="btn btn-outline-danger" (click)="addPlafondModal.close()">Cancel</button>
+          <button type="submit" class="btn btn-primary ltr:ml-4 rtl:mr-4">
+            {{ plafondParams.controls['id'].value ? 'Update' : 'Add' }}
+          </button>
+        </div>
+      </form>
+    </ng-template>
+  </ngx-custom-modal>
+</div>
