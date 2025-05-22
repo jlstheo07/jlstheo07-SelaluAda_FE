@@ -5,8 +5,15 @@ import { Component } from '@angular/core';
 })
 export class ApprovalComponent {
     constructor() {}
+
     items: any = [];
     selectedFile = null;
+    selectedCurrency = 'IDR - Indonesia Dollar Rupiah';
+    tax = 0;
+    discount = 0;
+    shippingCharge = 0;
+    paymentMethod = 'bank';
+
     params = {
         title: 'Multiguna',
         invoiceNo: '#0001',
@@ -16,15 +23,13 @@ export class ApprovalComponent {
             gender: 'wanita',
             address: 'Jl. Pasti Cepat A7/66',
             city: 'Jakarta Barat',
-            province : 'DKI Jakarta',
+            province: 'DKI Jakarta',
             phone: '(128) 666 070',
             job: 'Pegawai Swasta',
         },
-
-        invoiceDate: new Date().toString(),
-        dueDate: '',
+        invoiceDate: '',
+        dueDate: '', // akan diisi saat init
         bankInfo: {
-            
             no: '1234567890',
             name: 'Bank Central Asia',
             country: 'Indonesia',
@@ -32,36 +37,34 @@ export class ApprovalComponent {
         notes: 'Coll 5 saat November 2023',
     };
 
-    selectedCurrency = 'IDR - Indonesia Dollar Rupiah';
-    tax = 0;
-    discount = 0;
-    shippingCharge = 0;
-    paymentMethod = 'bank';
-
     ngOnInit() {
-        //set default data
-        this.items.push(
-            {
-                id: 1,
-                title: 'Platinum',
-                description: 'Max Plafond, Max Bunga, Max Tenor',
-                quantity: 2000000,
-                amount: 10,
-                isTax: false,
-            },
-        );
-
-        let dt: Date = new Date();
+        // Format tanggal ke yyyy-MM-dd
+        const dt = new Date();
         const month = dt.getMonth() + 1 < 10 ? '0' + (dt.getMonth() + 1) : dt.getMonth() + 1;
-        let date = dt.getDate() < 10 ? '0' + dt.getDate() : dt.getDate();
-        this.params.invoiceDate = dt.getFullYear() + '-' + month + '-' + date;
-        this.params.dueDate = dt.getFullYear() + '-' + month + '-' + date;
+        const date = dt.getDate() < 10 ? '0' + dt.getDate() : dt.getDate();
+        const today = dt.getFullYear() + '-' + month + '-' + date;
+
+        this.params.invoiceDate = today;
+        this.params.dueDate = today;
+
+        // Set item default
+        this.items.push({
+            id: 1,
+            title: 'Platinum',
+            description: 'Max Plafond, Max Bunga, Max Tenor',
+            quantity: 2000000,
+            amount: 10,
+            isTax: false,
+        });
     }
 
     addItem() {
         let maxId = 0;
-        if (this.items && this.items.length) {
-            maxId = this.items.reduce((max: number, character: any) => (character.id > max ? character.id : max), this.items[0].id);
+        if (this.items.length) {
+            maxId = this.items.reduce(
+                (max: number, item: any) => (item.id > max ? item.id : max),
+                this.items[0].id
+            );
         }
         this.items.push({
             id: maxId + 1,
@@ -74,6 +77,6 @@ export class ApprovalComponent {
     }
 
     removeItem(item: any = null) {
-        this.items = this.items.filter((d: any) => d.id != item.id);
+        this.items = this.items.filter((d: any) => d.id !== item.id);
     }
 }
