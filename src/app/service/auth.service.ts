@@ -1,40 +1,76 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+export interface AuthResponse {
+  token: string;
+  role_id: string;
+  username: string;
+  role: string;
+  customerId: string;
+}
+
+export interface ResetPasswordResponse {
+  message: string;
+  // bisa ditambahkan field lain sesuai response backend
+}
+
+export interface ForgotPasswordResponse {
+  message: string;
+  // bisa ditambahkan field lain jika backend mengirim lebih banyak info
+}
+
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/auth/login';
+  private baseUrl = 'http://localhost:8080/auth'; // base URL backend
 
   constructor(private http: HttpClient) {}
 
-  login(username: string, password: string): Observable<{ token: string }> {
+  login(usernameOrEmail: string, password: string): Observable<AuthResponse> {
+    const body = { usernameOrEmail, password };
+    return this.http.post<AuthResponse>(`${this.baseUrl}/login`, body);
+  }
+
+  changePassword(oldPassword: string, newPassword: string): Observable<HttpResponse<any>> {
+    const token = this.getToken();
     const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
     });
-  
-    const body = { username, password };
-    console.log(body);
-  
-    return this.http.post<{ token: string }>(
-      'http://localhost:8080/auth/login',
-      body,
-      { headers }
-    );
+
+    const body = { oldPassword, newPassword };
+
+    return this.http.put<any>(`${this.baseUrl}/change-password`, body, {
+      headers,
+      observe: 'response',
+    });
+  }
+
+  // Reset password tanpa login, cukup kirim token dan password baru
+  resetPassword(token: string, newPassword: string): Observable<ResetPasswordResponse> {
+    const body = { token, newPassword };
+    return this.http.post<ResetPasswordResponse>(`${this.baseUrl}/reset-password`, body);
   }
   
-  
+  forgotPassword(email: string): Observable<ForgotPasswordResponse> {
+    return this.http.post<ForgotPasswordResponse>(`${this.baseUrl}/forgot-password`, { email });
+  }
 
   saveToken(token: string): void {
-    localStorage.setItem('token', token);
+    localStorage.setItem('auth_token', token);
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return localStorage.getItem('auth_token');
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
   }
 
   logout(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('auth_token');
   }
 }

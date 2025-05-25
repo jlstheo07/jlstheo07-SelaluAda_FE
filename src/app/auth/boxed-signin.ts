@@ -21,10 +21,11 @@ export class BoxedSigninComponent {
         public storeData: Store<any>,
         public router: Router,
         private appSetting: AppService,
-        private authService: AuthService,        
+        private authService: AuthService,
     ) {
         this.initStore();
     }
+
     async initStore() {
         this.storeData
             .select((d) => d.index)
@@ -43,20 +44,30 @@ export class BoxedSigninComponent {
         }
         window.location.reload();
     }
-    
+
     onLogin(): void {
-        console.log("Masuk on Login")
+        this.errorMessage = '';  // reset pesan error
         this.authService.login(this.username, this.password).subscribe({
-          next: (res) => {
-            console.log(res);
-            console.log("Masuk on res")
-            this.authService.saveToken(res.token);
-            this.router.navigate(['/']); // arahkan ke halaman setelah login
-          },
-          error: (err) => {
-            console.log("Masuk on error")
-            this.errorMessage = 'Username atau password salah';
-          }
+            next: (res) => {
+                console.log('Login berhasil:', res);
+
+                // Simpan token dan data lain ke localStorage jika perlu
+                this.authService.saveToken(res.token);
+                localStorage.setItem('role', res.role);
+                localStorage.setItem('username', res.username);
+                localStorage.setItem('customerId', res.customerId);
+
+                // Navigasi ke halaman utama setelah login berhasil
+                this.router.navigate(['/']);
+            },
+            error: (err) => {
+                console.error('Login error:', err);
+                if (err.status === 401) {
+                    this.errorMessage = 'Username atau password salah';
+                } else {
+                    this.errorMessage = 'Terjadi kesalahan, coba lagi nanti.';
+                }
+            }
         });
     }
 }
