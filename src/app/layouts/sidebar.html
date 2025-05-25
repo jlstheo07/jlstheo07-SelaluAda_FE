@@ -78,7 +78,7 @@
                             </li>     
                         </ul>
                     </li>
-
+                    
                     <h2 class="-mx-4 mb-1 flex items-center bg-white-light/30 px-7 py-3 font-extrabold uppercase dark:bg-dark dark:bg-opacity-[0.08]">
                         <icon-minus class="hidden h-5 w-4 flex-none" />
                         <span>{{ ('user detail' | translate) || '&nbsp;' }}</span>
@@ -104,18 +104,20 @@
                         <div [@slideDownUp]="!activeDropdown.includes('authentication')" class="accordion-content">
                             <ul class="sub-menu text-gray-500">
                                 <li routerLinkActive="active" (click)="toggleMobileMenu()">
-                                    <a routerLink="/auth/boxed-signin" target="_blank">{{ 'Login' | translate }}</a>
+                                    <a routerLink="/auth/boxed-signin" target="_blank">{{ 'Log In' | translate }}</a>
                                 </li>
                                 <li routerLinkActive="active" (click)="toggleMobileMenu()">
                                     <a routerLink="/auth/boxed-signup" target="_blank">{{ 'Register' | translate }}</a>
                                 </li>
                                 <li routerLinkActive="active" (click)="toggleMobileMenu()">
-                                    <a routerLink="/auth/boxed-lockscreen" target="_blank">{{ 'Locksreen' | translate }}</a>
+                                    <a routerLink="/auth/boxed-lockscreen" target="_blank">{{ 'Lockscreen' | translate }}</a>
                                 </li>
                                 <li routerLinkActive="active" (click)="toggleMobileMenu()">
-                                    <a routerLink="/auth/boxed-password-reset" target="_blank">{{ 'Recover' | translate }}</a>
+                                    <a routerLink="/auth/boxed-password-reset" target="_blank">{{ 'Reset Password' | translate }}</a>
                                 </li>
-                            
+                                <li routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <a routerLink="/auth/boxed-change-password" target="_blank">{{ 'Change Password' | translate }}</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -827,18 +829,20 @@
                         <div [@slideDownUp]="!activeDropdown.includes('authentication')" class="accordion-content">
                             <ul class="sub-menu text-gray-500">
                                 <li routerLinkActive="active" (click)="toggleMobileMenu()">
-                                    <a routerLink="/auth/boxed-signin" target="_blank">{{ 'Login' | translate }}</a>
+                                    <a routerLink="/auth/boxed-signin" target="_blank">{{ 'Log In' | translate }}</a>
                                 </li>
                                 <li routerLinkActive="active" (click)="toggleMobileMenu()">
                                     <a routerLink="/auth/boxed-signup" target="_blank">{{ 'Register' | translate }}</a>
                                 </li>
                                 <li routerLinkActive="active" (click)="toggleMobileMenu()">
-                                    <a routerLink="/auth/boxed-lockscreen" target="_blank">{{ 'Locksreen' | translate }}</a>
+                                    <a routerLink="/auth/boxed-lockscreen" target="_blank">{{ 'Lockscreen' | translate }}</a>
                                 </li>
                                 <li routerLinkActive="active" (click)="toggleMobileMenu()">
-                                    <a routerLink="/auth/boxed-password-reset" target="_blank">{{ 'Recover' | translate }}</a>
+                                    <a routerLink="/auth/boxed-password-reset" target="_blank">{{ 'Reset Password' | translate }}</a>
                                 </li>
-                            
+                                <li routerLinkActive="active" (click)="toggleMobileMenu()">
+                                    <a routerLink="/auth/boxed-change-password" target="_blank">{{ 'Change Password' | translate }}</a>
+                                </li>
                             </ul>
                         </div>
                     </li>

@@ -14,11 +14,13 @@ export class PlafondComponent implements OnInit {
   plafondParams!: FormGroup;
 
   plafondList: any[] = [
-    { id: 1, level: 'Silver', maxLoan: 10000000, maxTenor: 12, maxInterest: 10 },
-    { id: 2, level: 'Gold', maxLoan: 20000000, maxTenor: 24, maxInterest: 8 },
-    { id: 3, level: 'Platinum', maxLoan: 50000000, maxTenor: 36, maxInterest: 6 },
+    { id: 1, level: 'Topaz', maxLoan: 6000000, maxTenor: 12, maxInterest: 10 },
+    { id: 2, level: 'Emerald', maxLoan: 15000000, maxTenor: 12, maxInterest: 8 },
+    { id: 3, level: 'Sapphire', maxLoan: 30000000, maxTenor: 12, maxInterest: 6 },
+    { id: 4, level: 'Ruby', maxLoan: 45000000, maxTenor: 12, maxInterest: 4 },
+    { id: 5, level: 'Diamond', maxLoan: 60000000, maxTenor: 12, maxInterest: 2 },    
   ];
-
+    
   filteredPlafondList: any[] = [];
 
   constructor(private fb: FormBuilder) {}
