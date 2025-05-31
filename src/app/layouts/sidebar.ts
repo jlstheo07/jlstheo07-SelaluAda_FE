@@ -3,21 +3,26 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { slideDownUp } from '../shared/animations';
+import { AuthService } from '../service/auth.service';
 
 @Component({
     selector: 'sidebar',
     templateUrl: './sidebar.html',
     animations: [slideDownUp],
+
 })
 export class SidebarComponent {
     active = false;
     store: any;
     activeDropdown: string[] = [];
     parentDropdown: string = '';
+    role: string | null = null;
+    
     constructor(
         public translate: TranslateService,
         public storeData: Store<any>,
         public router: Router,
+        private authService: AuthService,
     ) {
         this.initStore();
     }
@@ -30,7 +35,13 @@ export class SidebarComponent {
     }
 
     ngOnInit() {
+        this.role = this.authService.getRole();
+        console.log('Sidebar role:', this.role);
         this.setActiveDropdown();
+    }
+
+    hasAccess(allowedRoles: string[]): boolean {
+        return this.role !== null && allowedRoles.includes(this.role);
     }
 
     setActiveDropdown() {

@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpBackend, HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from 'src/app/interceptor/auth.interceptor';
 
 //Routes
 import { routes } from './app.route';
@@ -54,7 +56,6 @@ import { FaqComponent } from './pages/faq';
 // Layouts
 import { AppLayout } from './layouts/app-layout';
 import { AuthLayout } from './layouts/auth-layout';
-
 import { HeaderComponent } from './layouts/header';
 import { FooterComponent } from './layouts/footer';
 import { SidebarComponent } from './layouts/sidebar';
@@ -99,7 +100,13 @@ import { ThemeCustomizerComponent } from './layouts/theme-customizer';
         FaqComponent,
     ],
 
-    providers: [Title],
+    providers: [
+        {
+        provide: HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi: true
+        }
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

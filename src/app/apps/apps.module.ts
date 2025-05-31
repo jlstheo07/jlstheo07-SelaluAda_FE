@@ -18,12 +18,13 @@ import { MailboxComponent } from './mailbox';
 import { InvoiceListComponent } from './invoice/list';
 import { BranchesComponent } from './branches';
 import { RoleControlComponent } from './role-control';
-import { ReviewComponent } from './checker/review';
 import { title } from 'process';
+import { ReviewComponent } from './checker/review';
 import { ApprovalComponent } from './checker/approval';
 import { DisburseComponent } from './checker/disburse';
 import { HistoryComponent } from './history_loan/history';
 import { PlafondComponent } from './plafond';
+import { RoleGuard } from '../guards/role.guards';
 
 
 
@@ -41,9 +42,24 @@ const routes: Routes = [
     { path: 'apps/calendar', component: CalendarComponent, data: { title: 'Calendar' } },
     { path: 'apps/branches', component: BranchesComponent,data: {title: 'Branch'}},
     { path: 'apps/role-control', component: RoleControlComponent, data: {title: 'Branch'}},
-    { path: 'apps/checker/review', component: ReviewComponent, data: {title: 'Review'}},
-    { path: 'apps/checker/approval', component: ApprovalComponent, data: {title: 'Approval'}},
-    { path: 'apps/checker/Disburse', component: DisburseComponent, data: {title: 'Disburse'}},
+{
+        path: 'apps/checker/review',
+        component: ReviewComponent,
+        canActivate: [RoleGuard],
+        data: { title: 'Review', roles: ['MARKETING', 'SUPERADMIN'] }
+    },
+    {
+        path: 'apps/checker/approval',
+        component: ApprovalComponent,
+        canActivate: [RoleGuard],
+        data: { title: 'Approval', roles: ['BRANCHMANAGER', 'SUPERADMIN'] }
+    },
+    {
+        path: 'apps/checker/Disburse',
+        component: DisburseComponent,
+        canActivate: [RoleGuard],
+        data: { title: 'Disburse', roles: ['BACKOFFICE', 'SUPERADMIN'] }
+    },
     { path: 'apps/history_loan/history', component: HistoryComponent, data: {title: 'History'}},
     { path: 'apps/plafond', component: PlafondComponent, data: {title: 'Plafond'}},
 ];
@@ -67,6 +83,7 @@ const routes: Routes = [
         DisburseComponent,
         HistoryComponent,
         PlafondComponent,
+
     ],
 })
 export class AppsModule {}

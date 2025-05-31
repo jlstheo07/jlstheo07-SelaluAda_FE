@@ -53,7 +53,7 @@ export class BoxedSigninComponent {
 
                 // Simpan token dan data lain ke localStorage jika perlu
                 this.authService.saveToken(res.token);
-                localStorage.setItem('role', res.role);
+                localStorage.setItem('user_role', res.role); // ✅ konsisten
                 localStorage.setItem('username', res.username);
                 localStorage.setItem('customerId', res.customerId);
 

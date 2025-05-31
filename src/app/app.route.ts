@@ -29,6 +29,10 @@ import { AuthLayout } from './layouts/auth-layout';
 import { KnowledgeBaseComponent } from './pages/knowledge-base';
 import { FaqComponent } from './pages/faq';
 
+//role guard
+import { RoleGuard } from './guards/role.guards';
+//no-access
+import { NoAccessComponent } from './no-access/no-access.component';
 
 export const routes: Routes = [
     {
@@ -41,6 +45,7 @@ export const routes: Routes = [
             { path: 'analytics', component: AnalyticsComponent, data: { title: 'Analytics Admin' } },
             { path: 'finance', component: FinanceComponent, data: { title: 'Finance Admin' } },
             { path: 'crypto', component: CryptoComponent, data: { title: 'Crypto Admin' } },
+
 
             // widgets
             { path: 'widgets', component: WidgetsComponent, data: { title: 'Widgets' } },
@@ -76,6 +81,9 @@ export const routes: Routes = [
             // tables
             { path: 'tables', component: TablesComponent, data: { title: 'Tables' } },
             { path: '', loadChildren: () => import('./datatables/datatables.module').then((d) => d.DatatablesModule) },
+
+            { path: 'no-access', component: NoAccessComponent, data: { title: 'No Access' } },
+
         ],
     },
 
@@ -88,6 +96,7 @@ export const routes: Routes = [
 
             // auth
             { path: '', loadChildren: () => import('./auth/auth.module').then((d) => d.AuthModule) },
+            
         ],
     },
 ];
