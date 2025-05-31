@@ -37,7 +37,7 @@ export const routes: Routes = [
         children: [
            
             // dashboard
-            { path: '', component: IndexComponent, data: { title: 'Sales Admin' } },
+            { path: '', component: IndexComponent, data: { title: 'Dashboard' } },
             { path: 'analytics', component: AnalyticsComponent, data: { title: 'Analytics Admin' } },
             { path: 'finance', component: FinanceComponent, data: { title: 'Finance Admin' } },
             { path: 'crypto', component: CryptoComponent, data: { title: 'Crypto Admin' } },
