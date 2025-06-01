@@ -79,6 +79,30 @@ export class AuthService {
   }
 
   logout(): void {
+    const token = this.getToken();
+    if (!token) {
+      this.clearSession();
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    this.http.post(`${this.baseUrl}/logout`, {}, { headers }).subscribe({
+      next: () => {
+        this.clearSession();
+      },
+      error: (err) => {
+        console.error('Logout error:', err);
+        this.clearSession(); // tetap bersihkan meskipun gagal di server
+      }
+    });
+  }
+
+  private clearSession(): void {
     localStorage.removeItem('auth_token');
+    localStorage.removeItem('user_role');
+    window.location.href = '/auth/boxed-signin'; // redirect ke login setelah logout
   }
 }
