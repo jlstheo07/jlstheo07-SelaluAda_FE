@@ -11,6 +11,8 @@ import { BoxedSigninComponent } from './boxed-signin';
 import { BoxedSignupComponent } from './boxed-signup';
 import { BoxedChangePasswordComponent } from './boxed-change-password';
 import { BoxedForgotPasswordComponent } from './boxed-forgot-password';
+import { LandingComponent } from './landing';
+import { title } from 'process';
 
 
 
@@ -21,6 +23,7 @@ const routes: Routes = [
     { path: 'auth/boxed-signup', component: BoxedSignupComponent, data: { title: 'Boxed Signup' } },
     { path: 'auth/boxed-change-password', component: BoxedChangePasswordComponent, data: { title: 'Boxed Change Password' } },
     { path: 'auth/boxed-forgot-password', component: BoxedForgotPasswordComponent, data: { title: 'Boxed Forgot Password' } },
+    { path: 'auth/landing', component: LandingComponent, data: {title: 'Landing'} },
 
    
 ];
@@ -32,7 +35,8 @@ const routes: Routes = [
         BoxedSigninComponent,
         BoxedSignupComponent,
         BoxedChangePasswordComponent,
-        BoxedForgotPasswordComponent
+        BoxedForgotPasswordComponent,
+        LandingComponent
     ],
 })
 export class AuthModule {}
