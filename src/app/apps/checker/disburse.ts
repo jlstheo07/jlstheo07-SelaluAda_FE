@@ -33,8 +33,10 @@ export class DisburseComponent {
             no: '1234567890',
             name: 'Bank Central Asia',
             country: 'Indonesia',
+            branch:'Jawa',
+            plafond:'Topaz',
         },
-        notes: 'Coll 5 saat November 2023',
+        notes: 'Lengkap',
     };
 
     ngOnInit() {
@@ -52,8 +54,8 @@ export class DisburseComponent {
             id: 1,
             title: 'Platinum',
             description: 'Max Plafond, Max Bunga, Max Tenor',
-            quantity: 2000000,
-            amount: 10,
+            quantity: 1000000,
+            amount: 5,
             isTax: false,
         });
     }

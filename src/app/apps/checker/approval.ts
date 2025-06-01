@@ -1,82 +1,84 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-approval',
-  templateUrl: './approval.html',
+    templateUrl: './approval.html',
 })
-export class ApprovalComponent implements OnInit {
-  rows: any[] = [];
-  filteredRows: any[] = [];
-  searchNamaCustomer: string = '';
-  selectedPengajuan: any = null;
-  catatanManager: string = '';
+export class ApprovalComponent {
+    constructor() {}
 
-  ngOnInit(): void {
-    this.rows = [
-      {
-        id: 1,
-        namaCustomer: 'Mira Setiawan',
-        amount: 2000000,
-        tenor: '12 bulan',
-        tanggalPengajuan: new Date(),
-        status: 'Menunggu',
-        catatanMarketing: 'Pengajuan awal, dokumen lengkap',
-      },
-      {
-        id: 2,
-        namaCustomer: 'Andi Pratama',
-        amount: 5000000,
-        tenor: '24 bulan',
-        tanggalPengajuan: new Date(),
-        status: 'Menunggu',
-        catatanMarketing: 'Butuh konfirmasi alamat',
-      },
-      // Tambahkan data dummy lainnya jika diperlukan
-    ];
+    items: any = [];
+    selectedFile = null;
+    selectedCurrency = 'IDR - Indonesia Dollar Rupiah';
+    tax = 0;
+    discount = 0;
+    shippingCharge = 0;
+    paymentMethod = 'bank';
 
-    this.filteredRows = [...this.rows];
-  }
+    params = {
+        title: 'Multiguna',
+        invoiceNo: '#0001',
+        to: {
+            name: 'Mira Setiawan',
+            email: 'mirasetiawan@company.com',
+            gender: 'wanita',
+            address: 'Jl. Pasti Cepat A7/66',
+            city: 'Jakarta Barat',
+            province: 'DKI Jakarta',
+            phone: '(128) 666 070',
+            job: 'Pegawai Swasta',
+        },
+        invoiceDate: '',
+        dueDate: '', // akan diisi saat init
+        bankInfo: {
+            no: '1234567890',
+            name: 'Bank Central Asia',
+            country: 'Indonesia',
+            branch:'Jawa',
+            plafond:'Topaz',
+        },
+        notes: 'Lengkap',
+    };
 
-  filterPengajuan(): void {
-    const keyword = this.searchNamaCustomer.toLowerCase();
-    this.filteredRows = this.rows.filter(item =>
-      item.namaCustomer.toLowerCase().includes(keyword)
-    );
-  }
+    ngOnInit() {
+        // Format tanggal ke yyyy-MM-dd
+        const dt = new Date();
+        const month = dt.getMonth() + 1 < 10 ? '0' + (dt.getMonth() + 1) : dt.getMonth() + 1;
+        const date = dt.getDate() < 10 ? '0' + dt.getDate() : dt.getDate();
+        const today = dt.getFullYear() + '-' + month + '-' + date;
 
-  openReviewModal(pengajuan: any): void {
-    this.selectedPengajuan = { ...pengajuan };
-    this.catatanManager = '';
-    // Modal dibuka dari HTML via #modalReview reference
-  }
+        this.params.invoiceDate = today;
+        this.params.dueDate = today;
 
-  submitReview(disetujui: boolean): void {
-    if (!this.selectedPengajuan) return;
-
-    const statusBaru = disetujui ? 'Disetujui' : 'Ditolak';
-    const index = this.rows.findIndex(r => r.id === this.selectedPengajuan.id);
-
-    if (index > -1) {
-      this.rows[index].status = statusBaru;
-      this.rows[index].catatanManager = this.catatanManager || '-';
+        // Set item default
+        this.items.push({
+            id: 1,
+            title: 'Platinum',
+            description: 'Max Plafond, Max Bunga, Max Tenor',
+            quantity: 1000000,
+            amount: 5,
+            isTax: false,
+        });
     }
 
-    this.filteredRows = [...this.rows];
-    this.selectedPengajuan = null;
-    this.catatanManager = '';
-    const modal = document.querySelector('#modalReview') as any;
-    if (modal?.close) modal.close();
-  }
+    addItem() {
+        let maxId = 0;
+        if (this.items.length) {
+            maxId = this.items.reduce(
+                (max: number, item: any) => (item.id > max ? item.id : max),
+                this.items[0].id
+            );
+        }
+        this.items.push({
+            id: maxId + 1,
+            title: '',
+            description: '',
+            rate: 0,
+            quantity: 0,
+            amount: 0,
+        });
+    }
 
-  get reviewFields() {
-    if (!this.selectedPengajuan) return [];
-    return [
-      { label: 'Nama Customer', value: this.selectedPengajuan.namaCustomer },
-      { label: 'Jumlah Pinjaman', value: this.selectedPengajuan.amount },
-      { label: 'Tenor', value: this.selectedPengajuan.tenor },
-      { label: 'Tanggal Pengajuan', value: this.selectedPengajuan.tanggalPengajuan },
-      { label: 'Catatan Marketing', value: this.selectedPengajuan.catatanMarketing },
-      { label: 'Status', value: this.selectedPengajuan.status }
-    ];
-  }
+    removeItem(item: any = null) {
+        this.items = this.items.filter((d: any) => d.id !== item.id);
+    }
 }

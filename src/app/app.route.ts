@@ -46,7 +46,8 @@ export const routes: Routes = [
             { path: 'finance', component: FinanceComponent, data: { title: 'Finance Admin' } },
             { path: 'crypto', component: CryptoComponent, data: { title: 'Crypto Admin' } },
 
-
+            
+            
             // widgets
             { path: 'widgets', component: WidgetsComponent, data: { title: 'Widgets' } },
 
